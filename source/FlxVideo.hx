@@ -8,17 +8,18 @@ import openfl.events.Event;
 import vlc.VlcBitmap;
 #end
 import flixel.FlxBasic;
+import flixel.FlxState;
 import flixel.FlxG;
 
 class FlxVideo extends FlxBasic {
 	#if VIDEOS_ALLOWED
-	public var finishCallback:Void->Void = null;
+	public var finishCallback:FlxState;
 	
 	#if desktop
 	public static var vlcBitmap:VlcBitmap;
 	#end
 
-	public function new(name:String) {
+	public function new(name:String, callB:FlxState) {
 		super();
 
 		#if web
@@ -45,6 +46,9 @@ class FlxVideo extends FlxBasic {
 			}
 		});
 		netStream.play(name);
+
+		this.callB = callB;
+		callB = finishCallback;
 
 		#elseif desktop
 		// by Polybius, check out PolyEngine! https://github.com/polybiusproxy/PolyEngine
