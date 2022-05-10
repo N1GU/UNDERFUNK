@@ -13,8 +13,9 @@ import flixel.FlxG;
 
 class FlxVideo extends FlxBasic {
 	#if VIDEOS_ALLOWED
-	public var finishCallback:FlxState;
+	public var finishCallback:Void->Void = null;
 	
+	public var stateCllB:FlxState;
 	#if desktop
 	public static var vlcBitmap:VlcBitmap;
 	#end
@@ -47,9 +48,6 @@ class FlxVideo extends FlxBasic {
 		});
 		netStream.play(name);
 
-		this.callB = callB;
-		callB = finishCallback;
-
 		#elseif desktop
 		// by Polybius, check out PolyEngine! https://github.com/polybiusproxy/PolyEngine
 
@@ -69,6 +67,8 @@ class FlxVideo extends FlxBasic {
 		FlxG.addChildBelowMouse(vlcBitmap);
 		vlcBitmap.play(checkFile(name));
 		#end
+
+		callB = stateCllB;
 	}
 
 	#if desktop
